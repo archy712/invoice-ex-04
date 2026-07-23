@@ -18,11 +18,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Modern Web Starter Kit",
-    template: "%s | Modern Web Starter Kit",
+    default: "견적서 시스템",
+    template: "%s | 견적서 시스템",
   },
-  description:
-    "Next.js, TypeScript, TailwindCSS, shadcn/ui로 구성된 모던 웹 개발 스타터킷",
+  description: "노션 기반 견적서 조회 및 PDF 다운로드 시스템",
 };
 
 export default function RootLayout({
