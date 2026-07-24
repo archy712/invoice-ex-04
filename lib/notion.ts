@@ -1,4 +1,4 @@
-import { Client, isFullPage } from "@notionhq/client";
+import { APIErrorCode, APIResponseError, Client, isFullPage } from "@notionhq/client";
 import type { PageObjectResponse, RichTextItemResponse } from "@notionhq/client";
 
 import { invoiceSchema } from "@/lib/validations";
@@ -9,6 +9,32 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 // Items 데이터소스 ID. NOTION_DATABASE_ID(Invoices)의 "items" relation이 가리키는 대상으로,
 // Notion MCP로 워크스페이스 스키마를 직접 조회해 확인함(단일 워크스페이스·고정 스키마라 하드코딩).
 const ITEMS_DATA_SOURCE_ID = "3a726a4c-46b7-800d-a511-000bff1199fc";
+
+// Notion 페이지 ID 형식(32자리 16진수, 하이픈 유무 무관). API 호출 전에 걸러
+// 형식이 잘못된 값(빈 문자열·특수문자 등)에 대해 불필요한 요청을 보내지 않는다.
+const NOTION_PAGE_ID_PATTERN =
+  /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/i;
+
+// page.tsx가 notFound()로 변환해야 하는 "견적서를 찾을 수 없음" 신호.
+// API 키 오류(Unauthorized) 등 앱 설정성 에러나 Zod 파싱 실패는 이 에러로 감싸지 않고
+// 그대로 throw되어 error.tsx 바운더리가 흡수하도록 둔다(Task 007 동작 유지).
+export class InvoiceNotFoundError extends Error {
+  constructor(pageId: string) {
+    super(`견적서를 찾을 수 없습니다: ${pageId}`);
+    this.name = "InvoiceNotFoundError";
+  }
+}
+
+function isValidNotionPageIdFormat(pageId: string): boolean {
+  return NOTION_PAGE_ID_PATTERN.test(pageId);
+}
+
+// Notion은 보안상 "존재하지 않음"과 "통합에 공유되지 않음"을 구분해 노출하지 않고
+// 대부분 동일한 코드로 응답한다. 두 코드 모두 견적서 뷰어 입장에서는 "찾을 수 없음"으로 취급한다.
+const NOT_FOUND_ERROR_CODES: string[] = [
+  APIErrorCode.ObjectNotFound,
+  APIErrorCode.RestrictedResource,
+];
 
 type PageProperties = PageObjectResponse["properties"];
 
@@ -110,7 +136,23 @@ async function getInvoiceItems(pageId: string): Promise<InvoiceItem[]> {
 }
 
 export async function getInvoice(pageId: string): Promise<Invoice> {
-  const page = await notion.pages.retrieve({ page_id: pageId });
+  if (!isValidNotionPageIdFormat(pageId)) {
+    throw new InvoiceNotFoundError(pageId);
+  }
+
+  let page;
+  try {
+    page = await notion.pages.retrieve({ page_id: pageId });
+  } catch (error) {
+    if (
+      APIResponseError.isAPIResponseError(error) &&
+      NOT_FOUND_ERROR_CODES.includes(error.code)
+    ) {
+      throw new InvoiceNotFoundError(pageId);
+    }
+    throw error;
+  }
+
   if (!isFullPage(page)) {
     throw new Error(`Notion 페이지 전체 정보를 가져올 수 없습니다: ${pageId}`);
   }
