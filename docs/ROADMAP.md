@@ -69,6 +69,8 @@
   - ✅ `app/(site)/invoice/[notionPageId]/page.tsx` 빈 서버 컴포넌트 껍데기 생성 (동적 라우트 등록)
   - ✅ `app/(site)/invoice/[notionPageId]/loading.tsx` 로딩 스켈레톤 골격 생성
   - ✅ 전역 `app/not-found.tsx` 404 페이지 껍데기 생성 (F011)
+  - ✅ `app/(site)/invoice/[notionPageId]/error.tsx` 라우트 에러 바운더리 골격 추가 (Phase 3 Notion/Supabase 조회 오류 대비, 존재하지 않는 견적서 404는 별도 `notFound()`로 처리)
+  - ✅ `page.tsx`에 `generateMetadata` 골격 추가 (견적서별 동적 title/OG, 실제 조회 연결은 Task 007)
   - ✅ Next.js 16 동적 라우트 params 규약(비동기 `params`) 확인 — `node_modules/next/dist/docs/` 가이드 준수
   - ✅ 각 껍데기에서 라우트가 정상 렌더되는지 개발 서버로 확인 (상세: `tasks/001-invoice-route-skeleton.md`)
 
@@ -91,24 +93,24 @@
 
 > 실제 Notion 연동 없이 더미 데이터로 견적서 뷰어와 404 페이지 UI를 완성합니다. 백엔드와 병렬 개발 가능.
 
-- **Task 004: 더미 데이터 및 견적서 표시용 유틸리티 작성**
-  - `lib/dummy-data.ts` — Task 002 타입을 따르는 견적서/항목 더미 데이터 생성
-  - 통화 포맷(`Intl.NumberFormat` KRW), 날짜 포맷(`date-fns`) 유틸리티 작성
-  - 총액/소계 계산 유틸리티(수량 × 단가) 작성
+- **Task 004: 더미 데이터 및 견적서 표시용 유틸리티 작성** ✅ - 완료
+  - ✅ `lib/dummy-data.ts` — Task 002 타입을 따르는 견적서/항목 더미 데이터 생성
+  - ✅ 통화 포맷(`Intl.NumberFormat` KRW), 날짜 포맷(`date-fns`) 유틸리티 작성
+  - ✅ 총액/소계 계산 유틸리티(수량 × 단가) 작성
 
-- **Task 005: 견적서 뷰어 컴포넌트 구현 (더미 데이터)**
-  - `components/invoice/invoice-header.tsx` — 견적서 번호, 발행일, 유효기간, 상태 뱃지
-  - `components/invoice/invoice-client-info.tsx` — 발행자/클라이언트 정보
-  - `components/invoice/invoice-items-table.tsx` — 항목별 설명·수량·단가·금액 테이블
-  - `components/invoice/invoice-summary.tsx` — 총액 요약 영역
-  - `components/invoice/invoice-view.tsx` — 위 컴포넌트를 조합한 최상위 뷰어
-  - `components/ui/*` 기존 프리미티브(Card, Table, Badge, Button 등) 재사용
-  - `/invoice/[notionPageId]` 페이지에 더미 데이터로 뷰어 연결
+- **Task 005: 견적서 뷰어 컴포넌트 구현 (더미 데이터)** ✅ - 완료
+  - ✅ `components/invoice/invoice-header.tsx` — 견적서 번호, 발행일, 유효기간, 상태 뱃지
+  - ✅ `components/invoice/invoice-client-info.tsx` — 발행자/클라이언트 정보
+  - ✅ `components/invoice/invoice-items-table.tsx` — 항목별 설명·수량·단가·금액 테이블
+  - ✅ `components/invoice/invoice-summary.tsx` — 총액 요약 영역
+  - ✅ `components/invoice/invoice-view.tsx` — 위 컴포넌트를 조합한 최상위 뷰어
+  - ✅ `components/ui/*` 기존 프리미티브(Card, Table, Badge, Button 등) 재사용
+  - ✅ `/invoice/[notionPageId]` 페이지에 더미 데이터로 뷰어 연결
 
-- **Task 006: 404 및 로딩/에러 상태 UI 완성**
-  - 404 페이지 UI 완성 (F011): "견적서를 찾을 수 없습니다" + 발행자 문의 안내 (PRD 404 명세 준수)
-  - 로딩 스켈레톤 UI 완성 (`loading.tsx`)
-  - PDF 다운로드 버튼 UI 배치 (동작은 Phase 3, 여기서는 자리만)
+- **Task 006: 404 및 로딩/에러 상태 UI 완성** ✅ - 완료
+  - ✅ 404 페이지 UI 완성 (F011): "견적서를 찾을 수 없습니다" + 발행자 문의 안내 (PRD 404 명세 준수)
+  - ✅ 로딩 스켈레톤 UI 완성 (`loading.tsx`)
+  - ✅ PDF 다운로드 버튼 UI 배치 (동작은 Phase 3, 여기서는 자리만)
 
 ---
 
