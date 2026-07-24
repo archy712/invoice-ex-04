@@ -118,18 +118,19 @@
 
 > 더미 데이터를 실제 Notion API 데이터로 교체하고, PDF 다운로드와 캐시를 구현합니다.
 
-- **Task 007: Notion API 견적서 데이터 조회 구현** - 우선순위
-  - `lib/notion.ts` — `getInvoice(pageId)` 실제 구현: `notion.pages.retrieve` + 항목 Relation 조회
-  - Notion 페이지 속성 → 도메인 `Invoice` 타입 매핑 (Zod 스키마로 파싱/검증)
-  - 견적 항목(Items) Relation 조회 및 금액 계산 검증
-  - Server Component에서 `getInvoice` 호출해 실데이터 렌더 (더미 데이터 제거)
-  - 최신 Notion SDK 문법 확인을 위해 Context7 MCP로 `@notionhq/client` 문서 조회
-  - **## 테스트 체크리스트 (Playwright MCP)** — 모든 시나리오 Pass 전까지 완료(✅) 표시 금지:
-    - 정상: 유효한 `notionPageId` 접근 시 견적서 번호·클라이언트·발행일·항목·총액이 Notion 원본과 일치하게 렌더되는지 검증
-    - 정상: 항목(Items) Relation이 정확히 조회되어 수량 × 단가 및 총액 계산이 원본과 일치하는지 검증
-    - 에러: 존재하지 않는/삭제된 `notionPageId`에서 Notion API 에러가 앱 크래시 없이 처리되는지 검증
-    - 엣지: 필수 속성 누락·타입 불일치(예: 날짜/숫자 형식 오류) 시 Zod 파싱 실패가 안전하게 폴백되고 500이 노출되지 않는지 검증
-    - 엣지: 항목이 0개인 견적서에서 빈 테이블/총액 0원이 정상 렌더되는지 검증
+- **Task 007: Notion API 견적서 데이터 조회 구현** ✅ - 완료
+  - ✅ `lib/notion.ts` — `getInvoice(pageId)` 실제 구현: `notion.pages.retrieve` + 항목 Relation 조회
+  - ✅ Notion 페이지 속성 → 도메인 `Invoice` 타입 매핑 (Zod 스키마로 파싱/검증)
+  - ✅ 견적 항목(Items) Relation 조회 및 금액 계산 검증
+  - ✅ Server Component에서 `getInvoice` 호출해 실데이터 렌더 (더미 데이터 제거)
+  - ✅ 최신 Notion SDK 문법 확인을 위해 Context7 MCP로 `@notionhq/client` 문서 조회
+  - **## 테스트 체크리스트 (Playwright MCP)** — 모든 시나리오 Pass 완료:
+    - ✅ 정상: 유효한 `notionPageId` 접근 시 견적서 번호·클라이언트·발행일·항목·총액이 Notion 원본과 일치하게 렌더되는지 검증
+    - ✅ 정상: 항목(Items) Relation이 정확히 조회되어 수량 × 단가 및 총액 계산이 원본과 일치하는지 검증
+    - ✅ 에러: 존재하지 않는/삭제된 `notionPageId`에서 Notion API 에러가 앱 크래시 없이 처리되는지 검증
+    - ✅ 엣지: 필수 속성 누락·타입 불일치(예: 날짜/숫자 형식 오류) 시 Zod 파싱 실패가 안전하게 폴백되고 500이 노출되지 않는지 검증
+    - ✅ 엣지: 항목이 0개인 견적서에서 빈 테이블/총액 0원이 정상 렌더되는지 검증
+  - 상세: `tasks/007-notion-api-invoice-fetch.md`
 
 - **Task 008: 견적서 유효성 검증 및 404 처리 구현 (F011)**
   - 존재하지 않는/잘못된 `notionPageId` 접근 시 Notion API 에러 캐치 → `notFound()` 호출
@@ -237,8 +238,8 @@
 
 | # | 성공 기준 | 관련 Task | 상태 |
 | - | --------- | --------- | ---- |
-| 1 | 노션 DB에서 견적서 정보를 정상 조회 | Task 007 | ⬜ |
-| 2 | 고유 URL 접근 시 견적서 정확히 표시 | Task 005, 007 | ⬜ |
+| 1 | 노션 DB에서 견적서 정보를 정상 조회 | Task 007 | ✅ |
+| 2 | 고유 URL 접근 시 견적서 정확히 표시 | Task 005, 007 | ✅ |
 | 3 | PDF 다운로드 버튼 클릭 시 PDF 다운로드 | Task 010 | ⬜ |
 | 4 | 모바일/태블릿/데스크톱 정상 작동 | Task 011 | ⬜ |
 | 5 | 잘못된 URL 접근 시 적절한 에러 표시 | Task 006, 008 | ⬜ |
