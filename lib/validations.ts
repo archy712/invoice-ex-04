@@ -11,7 +11,7 @@
 import { z } from "zod";
 
 // Notion API 응답을 파싱/검증하는 스키마 (types/invoice.ts의 도메인 타입과 필드 1:1 대응).
-// Notion 원본 속성 → 이 스키마로의 매핑은 Phase 3(Task 007)에서 실제 응답을 확인한 뒤 구현한다.
+// lib/notion.ts의 getInvoice가 Notion 페이지 속성을 이 스키마 형태로 매핑한 뒤 검증한다.
 export const invoiceItemSchema = z.object({
   id: z.string(),
   description: z.string(),
@@ -22,10 +22,10 @@ export const invoiceItemSchema = z.object({
 
 export const invoiceSchema = z.object({
   id: z.string(),
-  invoiceNumber: z.string(),
-  clientName: z.string(),
-  issueDate: z.string(),
-  validUntil: z.string(),
+  invoiceNumber: z.string().min(1),
+  clientName: z.string().min(1),
+  issueDate: z.string().min(1),
+  validUntil: z.string().min(1),
   items: z.array(invoiceItemSchema),
   totalAmount: z.number(),
   status: z.enum(["대기", "승인", "거절"]),
