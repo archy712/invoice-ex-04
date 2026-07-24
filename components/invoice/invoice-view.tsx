@@ -28,7 +28,7 @@ export function InvoiceView({ invoice }: InvoiceViewProps) {
         {/* TODO(Phase 3/Task 010): @react-pdf/renderer 기반 PDF 생성 및 다운로드 로직 연결 */}
       </div>
 
-      <Card>
+      <Card className="shadow-sm">
         <CardContent className="flex flex-col gap-6">
           <InvoiceHeader invoice={invoice} />
           <Separator />
