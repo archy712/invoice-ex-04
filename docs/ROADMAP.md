@@ -61,7 +61,7 @@
 
 ---
 
-### Phase 1: 애플리케이션 골격 및 데이터 계층 설계
+### Phase 1: 애플리케이션 골격 및 데이터 계층 설계 ✅
 
 > 실제 기능 구현 전, 라우트 껍데기·타입·데이터 클라이언트 골격을 먼저 완성합니다. (구조 우선 접근법)
 
@@ -72,18 +72,18 @@
   - ✅ Next.js 16 동적 라우트 params 규약(비동기 `params`) 확인 — `node_modules/next/dist/docs/` 가이드 준수
   - ✅ 각 껍데기에서 라우트가 정상 렌더되는지 개발 서버로 확인 (상세: `tasks/001-invoice-route-skeleton.md`)
 
-- **Task 002: 견적서 도메인 타입 및 검증 스키마 정의**
-  - `types/invoice.ts` — `Invoice`, `InvoiceItem` 인터페이스 정의 (PRD 데이터 모델 F001 기준: invoice_number, client_name, issue_date, valid_until, items, total_amount, status)
-  - `lib/validations.ts` — Zod 스키마로 Notion 응답 파싱/검증 스키마 정의 (`invoiceSchema`, `invoiceItemSchema`)
-  - Notion API 응답 원본 타입 → 도메인 타입 매핑 인터페이스 설계 (구현은 Phase 3)
-  - `status` Select 값(대기/승인/거절) 유니온 타입 정의
+- **Task 002: 견적서 도메인 타입 및 검증 스키마 정의** ✅ - 완료
+  - ✅ `types/invoice.ts` — `Invoice`, `InvoiceItem` 인터페이스 정의 (PRD 데이터 모델 F001 기준: invoice_number, client_name, issue_date, valid_until, items, total_amount, status)
+  - ✅ `lib/validations.ts` — Zod 스키마로 Notion 응답 파싱/검증 스키마 정의 (`invoiceSchema`, `invoiceItemSchema`)
+  - ⬜ Notion API 응답 원본 타입 → 도메인 타입 매핑 인터페이스 설계 (Phase 3 Task 007로 이관 — 실제 응답 확인 전 추측 방지)
+  - ✅ `status` Select 값(대기/승인/거절) 유니온 타입 정의 (상세: `tasks/002-invoice-domain-types.md`)
 
-- **Task 003: 데이터 접근 계층 및 환경 변수 골격 구성**
-  - `@notionhq/client`, `@supabase/supabase-js`, `@react-pdf/renderer` 의존성 설치
-  - `lib/notion.ts` — Notion 클라이언트 초기화 골격 (`getInvoice(pageId)` 시그니처만, 구현은 Phase 3)
-  - `lib/supabase.ts` — Supabase 클라이언트 초기화 골격 (견적서 캐시용)
-  - `.env.local.example` 갱신: `NOTION_API_KEY`, `NOTION_DATABASE_ID`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`
-  - 최신 API 확인을 위해 Context7 MCP로 `@notionhq/client` / Supabase 문서 조회
+- **Task 003: 데이터 접근 계층 및 환경 변수 골격 구성** ✅ - 완료
+  - ✅ `@notionhq/client`, `@supabase/supabase-js`, `@react-pdf/renderer` 의존성 설치
+  - ✅ `lib/notion.ts` — Notion 클라이언트 초기화 골격 (`getInvoice(pageId)` 시그니처만, 구현은 Phase 3)
+  - ✅ `lib/supabase.ts` — Supabase 클라이언트 초기화 골격 (견적서 캐시용)
+  - ✅ `.env.local.example`은 이미 필요한 변수를 모두 포함하고 있음을 확인 (수정 없이 코드 쪽 변수명을 대조·정합화)
+  - ✅ 최신 API 확인을 위해 Context7 MCP로 `@notionhq/client` / Supabase 문서 조회 (상세: `tasks/003-data-access-layer-skeleton.md`)
 
 ---
 
