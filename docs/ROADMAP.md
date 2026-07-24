@@ -65,12 +65,12 @@
 
 > 실제 기능 구현 전, 라우트 껍데기·타입·데이터 클라이언트 골격을 먼저 완성합니다. (구조 우선 접근법)
 
-- **Task 001: 견적서 라우트 골격 및 404 구조 생성** - 우선순위
-  - `app/(site)/invoice/[notionPageId]/page.tsx` 빈 서버 컴포넌트 껍데기 생성 (동적 라우트 등록)
-  - `app/(site)/invoice/[notionPageId]/loading.tsx` 로딩 스켈레톤 골격 생성
-  - `app/(site)/invoice/[notionPageId]/not-found.tsx` 또는 전역 `app/not-found.tsx` 404 페이지 껍데기 생성 (F011)
-  - Next.js 16 동적 라우트 params 규약(비동기 `params`) 확인 — `node_modules/next/dist/docs/` 가이드 준수
-  - 각 껍데기에서 라우트가 정상 렌더되는지 개발 서버로 확인
+- **Task 001: 견적서 라우트 골격 및 404 구조 생성** ✅ - 완료
+  - ✅ `app/(site)/invoice/[notionPageId]/page.tsx` 빈 서버 컴포넌트 껍데기 생성 (동적 라우트 등록)
+  - ✅ `app/(site)/invoice/[notionPageId]/loading.tsx` 로딩 스켈레톤 골격 생성
+  - ✅ 전역 `app/not-found.tsx` 404 페이지 껍데기 생성 (F011)
+  - ✅ Next.js 16 동적 라우트 params 규약(비동기 `params`) 확인 — `node_modules/next/dist/docs/` 가이드 준수
+  - ✅ 각 껍데기에서 라우트가 정상 렌더되는지 개발 서버로 확인 (상세: `tasks/001-invoice-route-skeleton.md`)
 
 - **Task 002: 견적서 도메인 타입 및 검증 스키마 정의**
   - `types/invoice.ts` — `Invoice`, `InvoiceItem` 인터페이스 정의 (PRD 데이터 모델 F001 기준: invoice_number, client_name, issue_date, valid_until, items, total_amount, status)
